@@ -17,8 +17,20 @@ export function authenticationMiddleware(req,res,next) {
         return res.status(400).json({ error: `Auhterization header must start with Bearer` })
     }
 
-    const token = authHeader.splite(" ")[1];
+    const token = authHeader.split(" ")[1];
     const payload = validateUserToken(token);
+   
     req.user = payload;
+    next();
+}
+
+
+
+
+export function envalidAuthenticationMiddleware(req, res, next) { 
+    
+    if (!req.user || !req.user.id) {
+        return res.status(401).json({ error: `You are not logged in, Please logged in first !!!` });
+    }
     next();
 }

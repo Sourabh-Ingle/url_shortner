@@ -1,3 +1,4 @@
+import "dotenv/config";
 import jwt from 'jsonwebtoken';
 import { userTokenSchema } from '../validations/token.validation.js'
 
