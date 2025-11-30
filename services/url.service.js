@@ -1,8 +1,10 @@
 import db from "../db/index.js";
 import { urlsTable } from "../models/url.model.js";
+import { eq } from 'drizzle-orm';
 
 
-export async function createURL(url, shortCode, userID) {
+export async function createNewShortCodeURL(url, shortCode, userID) {
+
     const result = await db.insert(urlsTable).values({
         shortCode,
         targetURL: url,
@@ -11,3 +13,25 @@ export async function createURL(url, shortCode, userID) {
 
     return result;
 } 
+
+export async function getTargetURLByShortCode(code) {
+    const [result] = await db.select().from(urlsTable).where(eq(urlsTable.shortCode, code))
+    
+    return result;
+}
+
+export async function getURLById(urlId) {
+    const [result] = await db.select({
+        id: urlsTable.id
+    })
+        .from(urlsTable)
+        .where(eq(urlsTable.id, urlId));
+    
+    return result;
+}
+
+export async function getAllURLsByUserId(userID) {
+    const allUrls = await db.select().from(urlsTable).where(eq(urlsTable.userId, userID));
+    return allUrls;
+    
+}

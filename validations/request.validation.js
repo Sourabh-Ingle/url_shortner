@@ -17,3 +17,7 @@ export const shortenRequestBodySchema = z.object({
     url: z.string().url(),
     code: z.string().optional()
 })
+
+export const deleteIdRequestBodySchema = z.object({
+    id: z.string().uuid()
+})
