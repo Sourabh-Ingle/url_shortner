@@ -35,3 +35,13 @@ export async function getAllURLsByUserId(userID) {
     return allUrls;
     
 }
+
+export async function updateTargetURLById(id,targetURL,shortCode) {
+    await db.update(urlsTable)
+        .set({
+            targetURL,
+            shortCode
+        }).where(eq(urlsTable.id, id)).returning({id:urlsTable.id})
+    
+    return;
+}
